@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#076e30">
+<title>CBT Ujian SBK Kelas VIII — MTs Nurul Kamal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --g900:#05431f; --g800:#076e30; --g700:#088a3b; --g600:#0f9a45; --g500:#17b052;
+    --g100:#dff2e6; --g50:#eff9f2;
+    --gold:#f2c84e; --gold-d:#cf9b1e; --gold-ink:#5a4208;
+    --ink:#15241b; --muted:#5d6c62; --line:#d8e4db;
+    --bg:#e9eeeb; --card:#fff;
+    --answered:#0f9a45; --ragu:#f6a62a; --belum:#eef1ef; --belum-line:#c9d3cc;
+    --danger:#c0392b; --danger-bg:#fdecea;
+    --shadow:0 10px 28px rgba(8,58,28,.12); --sm:0 2px 8px rgba(8,58,28,.08);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh}
+  .wrap{max-width:760px;margin:0 auto;padding:14px}
+  .hidden{display:none !important}
+  img{max-width:100%;display:block}
+
+  .nkbanner{position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);color:#fff;
+    background:linear-gradient(135deg,#064a23,#0a7a38 52%,#0f9a45);padding:18px 16px 20px;display:flex;align-items:center;gap:14px;border:1px solid rgba(0,0,0,.05)}
+  .nkbanner::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 15px,transparent 15px 30px);pointer-events:none}
+  .nkbanner::before{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-d))}
+  .nk-crest{flex:0 0 auto;width:82px;height:82px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.25);position:relative;z-index:1;overflow:hidden}
+  .nk-crest img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+  .nk-txt{position:relative;z-index:1;min-width:0}
+  .nk-txt .y{font-size:.64rem;font-weight:800;letter-spacing:.14em;color:var(--gold)}
+  .nk-txt .m{font-size:.8rem;font-weight:700;line-height:1.12;margin-top:1px}
+  .nk-txt .m b{font-size:1.12rem;font-weight:800;display:block}
+  .nk-txt .a{font-size:.58rem;opacity:.92;margin-top:4px}
+  .nk-pill{display:inline-block;margin-top:8px;background:var(--gold);color:var(--gold-ink);font-weight:800;font-size:.62rem;letter-spacing:.06em;padding:4px 11px;border-radius:999px}
+
+  .cbt-tag{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0 2px;
+    font-size:.72rem;font-weight:800;letter-spacing:.14em;color:var(--g700)}
+  .cbt-tag::before,.cbt-tag::after{content:"";height:2px;width:30px;background:var(--gold);border-radius:2px}
+
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--sm);border:1px solid var(--line);padding:18px;margin-top:14px}
+  .card-h{display:flex;align-items:center;gap:8px;font-size:1rem;font-weight:800;color:var(--g800);margin:0 0 4px}
+  .card-h .dot{width:9px;height:9px;border-radius:50%;background:var(--gold)}
+
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 2px}
+  .chip{background:var(--g50);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.8rem;font-weight:700;color:var(--g700);flex:1;text-align:center;min-width:90px}
+  .chip b{display:block;font-size:1.05rem;color:var(--g800)}
+
+  .steps{margin:12px 0 0;padding-left:0;list-style:none;counter-reset:s}
+  .steps li{position:relative;padding:7px 0 7px 36px;font-size:.88rem;color:var(--muted);border-bottom:1px dashed var(--line)}
+  .steps li:last-child{border:none}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:6px;width:24px;height:24px;
+    background:var(--g100);color:var(--g700);font-weight:800;border-radius:50%;display:grid;place-items:center;font-size:.76rem}
+
+  label.fld{display:block;margin-top:13px;font-weight:700;font-size:.86rem}
+  label.fld span{color:var(--danger)}
+  .inp,.sel{width:100%;margin-top:6px;padding:13px 14px;border:1.5px solid var(--line);border-radius:11px;
+    font-size:1rem;font-family:inherit;background:#fbfdfb;color:var(--ink)}
+  .inp:focus,.sel:focus{outline:none;border-color:var(--g500);background:#fff;box-shadow:0 0 0 4px var(--g100)}
+  .err{color:var(--danger);font-size:.8rem;margin-top:6px;font-weight:700;display:none}
+  .err.show{display:block}
+
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;cursor:pointer;
+    font-family:inherit;font-weight:800;font-size:1rem;padding:15px 18px;border-radius:13px;transition:.12s}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:linear-gradient(135deg,var(--g700),var(--g500));color:#fff;box-shadow:0 8px 18px rgba(15,154,69,.32);margin-top:18px}
+  .btn-ghost{background:#fff;color:var(--g700);border:1.5px solid var(--line)}
+  .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-d));color:var(--gold-ink)}
+  .btn-danger{background:linear-gradient(135deg,#e05a3e,#c0392b);color:#fff}
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+  .btn-sm{font-size:.86rem;padding:12px 10px}
+
+  .foot{text-align:center;color:var(--muted);font-size:.72rem;margin:20px 0 30px}
+  .foot b{color:var(--g700)}
+
+  .appbar{position:sticky;top:0;z-index:40;background:linear-gradient(135deg,var(--g800),var(--g600));color:#fff;
+    box-shadow:0 2px 12px rgba(8,58,28,.28)}
+  .appbar-in{max-width:760px;margin:0 auto;padding:9px 14px}
+  .ab-row{display:flex;align-items:center;gap:10px}
+  .logo-badge{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:#fff;overflow:hidden;
+    box-shadow:0 2px 6px rgba(0,0,0,.25);position:relative}
+  .logo-badge img{width:100%;height:100%;object-fit:cover;display:block}
+  .ab-title{flex:1;min-width:0}
+  .ab-title b{display:block;font-size:.9rem;font-weight:800;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ab-title small{font-size:.68rem;opacity:.85;font-weight:600}
+  .clock{flex:0 0 auto;text-align:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);
+    border-radius:10px;padding:5px 10px;min-width:82px}
+  .clock .t{font-size:1.15rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+  .clock .l{font-size:.56rem;letter-spacing:.12em;opacity:.85;font-weight:700}
+  .clock.warn{background:#fff4d6;border-color:#f0c04a;color:#7a5600}
+  .clock.danger{background:#ffdede;border-color:#f3a9a9;color:#b32b1c;animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.6}}
+  .peserta{display:flex;align-items:center;gap:7px;margin-top:8px;background:rgba(255,255,255,.12);
+    border-radius:9px;padding:6px 10px;font-size:.78rem;font-weight:600}
+  .peserta .av{width:20px;height:20px;border-radius:50%;background:var(--gold);color:var(--gold-ink);
+    display:grid;place-items:center;font-size:.7rem;font-weight:800}
+  .pbar{height:5px;background:rgba(255,255,255,.2);border-radius:9px;margin-top:8px;overflow:hidden}
+  .pbar > i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s;border-radius:9px}
+
+  .qhead{display:flex;align-items:center;justify-content:space-between;margin:-18px -18px 14px;padding:12px 18px;
+    background:var(--g50);border-bottom:1px solid var(--line);border-radius:16px 16px 0 0}
+  .qhead .no{font-weight:800;color:var(--g800);font-size:.95rem}
+  .qhead .no b{color:var(--gold-d)}
+  .ragu-tag{display:none;align-items:center;gap:5px;font-size:.72rem;font-weight:800;color:#9a6500;background:#fff3d6;border:1px solid #f0cf7e;padding:4px 9px;border-radius:999px}
+  .ragu-tag.on{display:flex}
+  .qtext{font-size:1.1rem;font-weight:700;line-height:1.5;margin:0 0 2px}
+  .opts{margin-top:15px;display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;border:1.5px solid var(--line);
+    border-radius:13px;cursor:pointer;background:#fbfdfb;transition:.12s;user-select:none}
+  .opt:active{transform:scale(.995)}
+  .opt .mk{flex:0 0 auto;width:30px;height:30px;border-radius:9px;border:2px solid var(--line);display:grid;place-items:center;
+    font-weight:800;color:var(--muted);background:#fff;font-size:.9rem}
+  .opt .tx{font-size:.97rem;padding-top:3px}
+  .opt.sel{border-color:var(--g500);background:var(--g50);box-shadow:0 0 0 3px var(--g100)}
+  .opt.sel .mk{background:var(--g600);border-color:var(--g600);color:#fff}
+
+  .acts{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:9px;margin-top:18px}
+  .acts .btn{margin-top:0}
+
+  .panel{margin-top:14px}
+  .panel-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;background:var(--g800);color:#fff;
+    border:none;font-family:inherit;font-weight:800;font-size:.9rem;padding:13px 16px;border-radius:13px;cursor:pointer}
+  .panel-toggle .cnt{font-size:.74rem;font-weight:700;background:rgba(255,255,255,.18);padding:3px 9px;border-radius:999px}
+  .panel-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 13px 13px;padding:14px;margin-top:-2px}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.72rem;color:var(--muted);margin-bottom:12px;font-weight:600}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+  .legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+  .grid{display:grid;grid-template-columns:repeat(8,1fr);gap:7px}
+  .grid button{aspect-ratio:1;border:1.5px solid var(--belum-line);background:var(--belum);border-radius:9px;
+    font-weight:800;font-family:inherit;font-size:.82rem;color:var(--muted);cursor:pointer}
+  .grid button.done{background:var(--answered);color:#fff;border-color:var(--answered)}
+  .grid button.ragu{background:var(--ragu);color:#fff;border-color:var(--ragu)}
+  .grid button.cur{outline:3px solid var(--g800);outline-offset:1px}
+  @media(max-width:360px){.grid{grid-template-columns:repeat(6,1fr)}}
+
+  .overlay{position:fixed;inset:0;background:rgba(8,40,20,.55);backdrop-filter:blur(3px);display:grid;place-items:center;z-index:100;padding:22px}
+  .modal{background:#fff;border-radius:18px;padding:24px 20px;max-width:390px;width:100%;box-shadow:var(--shadow)}
+  .modal h3{margin:0 0 6px;color:var(--g800);font-size:1.2rem;text-align:center}
+  .modal p{margin:0;color:var(--muted);font-size:.9rem;text-align:center}
+  .tally{display:flex;gap:10px;margin:16px 0}
+  .tally div{flex:1;text-align:center;border-radius:12px;padding:10px 4px;border:1px solid var(--line)}
+  .tally b{display:block;font-size:1.4rem}
+  .tally small{font-size:.68rem;color:var(--muted);font-weight:700}
+  .tally .d b{color:var(--answered)} .tally .r b{color:var(--ragu)} .tally .b b{color:var(--danger)}
+  .modal-acts{display:flex;gap:10px;margin-top:6px}
+  .modal-acts .btn{margin-top:0}
+  .spinner{width:46px;height:46px;border:4px solid var(--g100);border-top-color:var(--g600);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 14px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .check{width:68px;height:68px;margin:0 auto 12px;border-radius:50%;background:var(--g100);display:grid;place-items:center}
+  .check svg{width:38px;height:38px;stroke:var(--g600)}
+  .sum{display:flex;justify-content:center;gap:26px;margin:14px 0 2px}
+  .sum div{text-align:center} .sum b{display:block;font-size:1.5rem;color:var(--g700)} .sum small{font-size:.72rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="screen-start">
+  <div class="nkbanner">
+    <div class="nk-crest">
+      <img src="assets/logo.webp" alt="Logo MTs Nurul Kamal">
+    </div>
+    <div class="nk-txt">
+      <div class="y">YAYASAN NURUL KAMAL</div>
+      <div class="m">MADRASAH TSANAWIYAH<b>(MTs) NURUL KAMAL</b></div>
+      <div class="a">Sambirejo · Kec. Selupu Rejang · Kab. Rejang Lebong</div>
+      <span class="nk-pill">SOAL SBK · KELAS VIII</span>
+    </div>
+  </div>
+
+  <div class="cbt-tag">SISTEM UJIAN BERBASIS KOMPUTER (CBT)</div>
+
+  <div class="chips">
+    <div class="chip"><b>50</b>Soal</div>
+    <div class="chip"><b id="durchip">90</b>Menit</div>
+    <div class="chip"><b>PG</b>Pilihan Ganda</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><span class="dot"></span>Data Peserta</div>
+    <label class="fld" for="nama">Nama Lengkap <span>*</span></label>
+    <input class="inp" id="nama" type="text" autocomplete="off" placeholder="Masukkan nama lengkap">
+    <div class="err" id="err-nama">Nama wajib diisi.</div>
+
+    <label class="fld" for="kelas">Kelas <span>*</span></label>
+    <select class="sel" id="kelas">
+      <option value="">— Pilih kelas —</option>
+      <option value="Kelas 8A">Kelas 8A</option><option value="Kelas 8B">Kelas 8B</option><option value="Kelas 8C">Kelas 8C</option>
+    </select>
+    <div class="err" id="err-kelas">Kelas wajib dipilih.</div>
+
+    <label class="fld" for="noujian">No. Ujian Peserta <span>*</span></label>
+    <input class="inp" id="noujian" type="text" autocomplete="off" maxlength="30" placeholder="Masukkan no. ujian peserta">
+    <div class="err" id="err-noujian">No. ujian peserta wajib diisi.</div>
+
+    <button class="btn btn-primary" id="btn-start">MASUK &amp; MULAI UJIAN &nbsp;→</button>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><span class="dot"></span>Petunjuk Ujian</div>
+    <ul class="steps">
+      <li>Tulis Nama dengan lengkap dan pilih kelas yang sesuai.</li>
+      <li>Isi No. Ujian Peserta sesuai kartu ujian.</li>
+      <li>Kerjakan semua soal. Gunakan tombol <b>Ragu-ragu</b> untuk menandai soal yang ingin ditinjau ulang.</li>
+      <li>Semua soal <b>wajib dijawab</b> sebelum menekan <b>Akhiri Ujian</b>.</li>
+      <li>Jika waktu habis, jawaban terkirim otomatis. Pastikan internet stabil.</li>
+    </ul>
+  </div>
+
+  <p class="foot">Guru Mapel oleh <b>Widia Nengsih, S. Pd</b> · MTs Nurul Kamal</p>
+</div>
+
+<div id="screen-exam" class="hidden">
+  <div class="appbar">
+    <div class="appbar-in">
+      <div class="ab-row">
+        <div class="logo-badge"><img src="assets/logo.webp" alt="logo"></div>
+        <div class="ab-title"><b>UJIAN SBK — KELAS VIII</b><small>MTs Nurul Kamal · CBT</small></div>
+        <div class="clock" id="clock"><div class="t" id="clock-t">90:00</div><div class="l">SISA WAKTU</div></div>
+      </div>
+      <div class="peserta"><span class="av" id="av">A</span><span id="peserta-txt">Peserta</span></div>
+      <div class="pbar"><i id="pbar"></i></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="card" id="qcard">
+      <div class="qhead">
+        <div class="no">SOAL NO. <b id="qno">1</b> / 50</div>
+        <div class="ragu-tag" id="ragutag">★ Ditandai ragu-ragu</div>
+      </div>
+      <p class="qtext" id="qtext"></p>
+      <div class="opts" id="opts"></div>
+
+      <div class="acts">
+        <button class="btn btn-ghost btn-sm" id="btn-prev">◀ Sebelum</button>
+        <button class="btn btn-gold btn-sm" id="btn-ragu">★ Ragu-ragu</button>
+        <button class="btn btn-primary btn-sm" id="btn-next" style="margin-top:0">Lanjut ▶</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <button class="panel-toggle" id="panel-toggle">
+        <span>📋 Daftar Soal</span><span class="cnt" id="panel-cnt">0 / 50 terjawab</span>
+      </button>
+      <div class="panel-body hidden" id="panel-body">
+        <div class="legend">
+          <span><i style="background:var(--answered)"></i>Dijawab</span>
+          <span><i style="background:var(--ragu)"></i>Ragu-ragu</span>
+          <span><i style="background:var(--belum);border:1px solid var(--belum-line)"></i>Belum</span>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-danger" id="btn-finish" style="margin-top:14px">⏹ AKHIRI UJIAN</button>
+    <p class="foot">Guru Mapel oleh <b>Widia Nengsih, S. Pd</b> · MTs Nurul Kamal</p>
+  </div>
+</div>
+
+<div class="overlay hidden" id="ov-confirm">
+  <div class="modal">
+    <h3 id="cf-title">Akhiri Ujian?</h3>
+    <p id="cf-msg">Periksa kembali jawabanmu sebelum mengakhiri.</p>
+    <div class="tally">
+      <div class="d"><b id="t-done">0</b><small>DIJAWAB</small></div>
+      <div class="r"><b id="t-ragu">0</b><small>RAGU</small></div>
+      <div class="b"><b id="t-belum">0</b><small>BELUM</small></div>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-ghost" id="cf-cancel" style="margin-top:0">Kembali</button>
+      <button class="btn btn-danger" id="cf-ok" style="margin-top:0">Ya, Akhiri</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="ov-sending">
+  <div class="modal" style="text-align:center">
+    <div class="spinner"></div>
+    <h3>Mengirim jawaban…</h3>
+    <p>Mohon tunggu, jangan tutup halaman ini.</p>
+  </div>
+</div>
+
+<div class="overlay hidden" id="ov-done">
+  <div class="modal">
+    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h3>Jawaban Terkirim!</h3>
+    <p>Terima kasih, <b id="done-nama"></b>. Jawabanmu sudah tersimpan.</p>
+    <div class="sum"><div><b id="done-ans">0</b><small>Terjawab</small></div><div><b>50</b><small>Total Soal</small></div></div>
+    <p style="margin-top:12px;font-size:.8rem">Silakan tunggu instruksi pengawas. Nilai diumumkan kemudian.</p>
+  </div>
+</div>
+
+<script>
+const CONFIG = {
+  action: "https://docs.google.com/forms/d/e/1FAIpQLScYFMc6eSmg8MmtSmfzk5rlQUFG1Mf6dWGPa1X7RFTPaT6vdQ/formResponse",
+  E_NAMA: "entry.597590461",
+  E_KELAS: "entry.1871495150",
+  E_NOUJIAN: "entry.250921667",
+  DURATION_MIN: 90
+};
+const LETTERS = ["A","B","C","D"];
+
+const QBANK = [
+["entry.392207855","Perbedaan utama produk kerajinan dan produk industri adalah kerajinan mengandalkan keterampilan tangan, sedangkan industri bertumpu pada ...",["keindahan bentuk", "jumlah bahan baku", "kekuatan mesin", "tradisi daerah"]],
+["entry.809602993","Kerajinan bahan lunak adalah kerajinan yang menggunakan bahan dasar yang bersifat ...",["lentur, lembut, empuk, dan mudah dibentuk", "keras, padat, dan kedap air", "kaku dan mudah patah", "tajam dan sulit dibentuk"]],
+["entry.1826188299","Kerajinan yang bersifat kedaerahan/tradisional memiliki nilai guna praktis dan masih dipengaruhi oleh ...",["kekuatan mesin pabrik", "selera pasar luar negeri", "penggunaan bahan buatan", "adat istiadat setempat"]],
+["entry.67154739","Gelang, kalung, bros, dan cincin termasuk produk kerajinan bahan lunak sebagai ...",["kelengkapan rumah atau bangunan", "kelengkapan busana", "kelengkapan suatu benda", "alat komunikasi tradisional"]],
+["entry.16840418","Air mancur berbentuk kodok yang ditempatkan di taman rumah merupakan contoh kerajinan sebagai ...",["kelengkapan busana", "kelengkapan suatu benda", "kelengkapan rumah/bangunan", "perlengkapan dapur"]],
+["entry.1384828121","Bahan yang termasuk bahan lunak alam adalah ...",["tanah liat, kulit, dan getah nyatu", "polymer clay, lilin, dan sabun", "gips, fiberglass, dan parafin", "plastisin, gips, dan lilin"]],
+["entry.1495412361","Bahan yang termasuk bahan lunak buatan adalah ...",["tanah liat, kulit, dan bubur tisu", "lilin, sabun, dan gips", "getah nyatu, kulit, dan flour clay", "tanah liat, getah nyatu, dan flour clay"]],
+["entry.1019954711","Tanah liat jenis stoneware memiliki daya bakar hingga ...",["600 °C", "900 °C", "1100 °C", "1300 °C"]],
+["entry.1619296394","Kata keramik berasal dari kata 'keramos' dalam bahasa ...",["Latin", "Arab", "Yunani", "Sanskerta"]],
+["entry.1562962361","Kulit alami yang terbakar akan berbau ...",["karet", "sate", "belerang", "asam"]],
+["entry.1406525950","Agar getah nyatu dapat dibentuk, getah harus ...",["dimasak terlebih dahulu agar lunak dan elastis", "dibakar sampai keras", "dibekukan dalam es", "dicampur semen"]],
+["entry.1262241813","Kelemahan kerajinan dari flour clay adalah ...",["terlalu keras dan mudah pecah", "tidak dapat diberi pewarna", "hanya bisa dibentuk dengan cara dibakar", "tidak tahan air dan mudah rusak jika terkena air"]],
+["entry.1380144896","Perbedaan polymer clay dan plastisin adalah ...",["polymer clay mengandung minyak dan tetap lunak, sedangkan plastisin tidak mengandung minyak", "polymer clay hanya berwarna putih, sedangkan plastisin berwarna cerah", "polymer clay tidak mengandung minyak dan dapat mengeras, sedangkan plastisin mengandung minyak dan tetap lunak", "polymer clay berwujud cair, sedangkan plastisin berwujud bubuk"]],
+["entry.606060118","Bahan campuran yang membuat fiberglass dapat cepat mengeras adalah ...",["katalis", "minyak", "air", "biang warna"]],
+["entry.1853313967","Pembuatan kerajinan dari lilin dan parafin dilakukan dengan cara ...",["diukir saat bahan masih padat", "dicetak atau dicor saat bahan mencair", "dianyam menggunakan serat", "ditenun bersama kain"]],
+["entry.1928866003","Hal yang harus diperhatikan saat berkarya dengan gips adalah gips ...",["mudah terbakar saat terkena panas", "mudah menguap di udara terbuka", "mudah berubah warna di bawah sinar matahari", "mudah pecah sehingga harus berhati-hati"]],
+["entry.1758465100","Sabun yang masih padat dapat langsung dibuat menjadi kerajinan dengan cara ...",["dianyam", "diukir", "dilebur dengan katalis", "dibakar di tungku"]],
+["entry.463444290","Syarat perancangan benda kerajinan yang mengutamakan nilai praktis sesuai fungsi dan kebutuhan disebut ...",["keamanan (safety)", "keindahan (aesthetic)", "kegunaan (utility)", "kenyamanan (comfortable)"]],
+["entry.318991412","Piring dari serat kelapa yang pelapis dan pewarnanya tidak berbahaya bagi makanan memenuhi syarat perancangan ...",["keamanan (safety)", "kegunaan (utility)", "keindahan (aesthetic)", "keluwesan (flexibility)"]],
+["entry.1990485240","Cangkir yang didesain dengan pegangan agar menyenangkan saat dipakai merupakan contoh syarat ...",["kegunaan (utility)", "keamanan (safety)", "keindahan (aesthetic)", "kenyamanan (comfortable)"]],
+["entry.1776421365","Kerajinan unggulan masyarakat Banyumulek, Lombok, adalah ...",["flour clay", "tembikar/keramik hitam", "lilin hias", "kerajinan kulit"]],
+["entry.772640303","Pembakaran tanah liat dalam pembuatan keramik dilakukan pada suhu ...",["100 °C sampai 300 °C", "300 °C sampai 500 °C", "600 °C sampai 1300 °C", "1500 °C sampai 2000 °C"]],
+["entry.1508227900","Pada zaman prasejarah, alat komunikasi yang digunakan masih sangat sederhana, seperti ...",["suara dengusan, isyarat asap, dan bahasa isyarat tangan", "telepon, radio, dan televisi", "surat kabar dan faksimili", "komputer dan handphone"]],
+["entry.899475192","Penyampaian pesan atau informasi oleh seseorang kepada orang lain secara langsung (lisan) maupun tidak langsung (melalui media) disebut ...",["domestikasi", "distribusi", "navigasi", "komunikasi"]],
+["entry.1459823910","Kentongan digunakan oleh masyarakat untuk ...",["mengirim surat antarkerajaan", "menyiarkan berita bergambar", "memberi informasi bahwa telah atau akan terjadi sesuatu", "menghubungkan pembicaraan jarak jauh"]],
+["entry.783415495","Kentongan besar yang dibunyikan untuk memberitahukan waktu salat disebut ...",["lonceng", "bedug", "lontar", "terompet keong"]],
+["entry.84399870","Pada masa kerajaan kuno, surat-menyurat antarkerajaan di Indonesia ditulis pada media berupa ...",["daun lontar", "kertas koran", "kain sutra", "lembaran plastik"]],
+["entry.1729491000","Di Sulawesi Selatan, naskah daun lontar dikenal dengan sebutan ...",["bedug", "genta", "prasasti", "lontara"]],
+["entry.1435560022","Pada masa modern, lonceng masih digunakan oleh beberapa sekolah sebagai tanda ...",["datangnya musim hujan", "dimulainya perang antarkerajaan", "pergantian jam pelajaran dan jam istirahat", "pengiriman pesan rahasia"]],
+["entry.254701565","Merpati pos dapat mengantar surat sampai tujuan karena memiliki ...",["suara yang merdu dan nyaring", "daya ingat kuat, kemampuan navigasi, dan naluri kembali ke sarang", "bulu yang tebal dan hangat", "tubuh yang besar dan berat"]],
+["entry.337863845","Piagam atau dokumen yang dituliskan pada bahan yang keras dan tahan lama disebut ...",["lontar", "papyrus", "piktografi", "prasasti"]],
+["entry.689025740","Terompet keong hingga saat ini masih digunakan dalam acara adat terutama di daerah ...",["pesisir", "pegunungan", "perkotaan", "gurun"]],
+["entry.79404308","Serat papyrus digunakan sebagai media menyampaikan informasi pada masa 500 SM di daerah ...",["Sungai Musi", "Sungai Mekong", "Sungai Nil", "Sungai Kapuas"]],
+["entry.1427104588","Piktografi yang digunakan pada masa 3000 SM di Sumeria berupa ...",["suara tabung kayu yang dipukul", "simbol-simbol yang jika disusun menjadi kata atau kalimat bermakna", "asap yang dibakar di atas bukit", "burung yang dilatih membawa surat"]],
+["entry.418518363","Surat kabar pertama kali dikenal pada masa kekaisaran ...",["Mesir Kuno", "Majapahit", "Mataram", "Romawi Kuno"]],
+["entry.541983183","Radio pertama dibuat oleh ... pada tahun 1897.",["Guglielmo Marconi", "Alexander Graham Bell", "Paul Nipkow", "Charles Babbage"]],
+["entry.702631352","Kata televisi berasal dari bahasa Latin 'tele' dan 'vision' yang berarti ...",["mendengar jarak jauh", "melihat jarak jauh", "berbicara jarak jauh", "menulis jarak jauh"]],
+["entry.845065900","Telepon pertama kali ditemukan oleh ... pada tahun 1876.",["Paul Nipkow", "Heinrich Hertz", "Alexander Graham Bell", "Howard Aiken"]],
+["entry.111182193","Mesin faksimili yang digunakan untuk mengirim dokumen melalui jaringan telepon juga disebut ...",["teleskop", "telegraf", "teleprompter", "telecopier"]],
+["entry.1316475397","Handy talky biasa digunakan oleh ...",["satuan kepolisian, tentara, dan satpam", "petani, nelayan, dan peternak", "guru dan siswa di kelas", "pedagang dan pembeli di pasar"]],
+["entry.1119327436","Komputer adalah seperangkat alat elektronik yang digunakan untuk ...",["menyiarkan suara tanpa gambar", "mengirim pesan dengan asap", "mengolah data secara cepat dan tepat sehingga menghasilkan informasi yang akurat", "memanggil orang dengan bunyi"]],
+["entry.1238076645","Hewan yang dipelihara karena kekhasan dan keunikan yang dimilikinya disebut ternak ...",["potong", "kesayangan", "perah", "kerja"]],
+["entry.477997921","Penjinakan hewan liar yang dilakukan manusia disebut ...",["adaptasi", "konservasi", "migrasi", "domestikasi"]],
+["entry.1154352464","Kelinci memiliki potensi biologis tinggi karena waktu buntingnya pendek, yaitu sekitar ...",["30–32 hari", "10–15 hari", "60–65 hari", "90–100 hari"]],
+["entry.1849212060","Bibit kelinci yang baik dipelihara sebaiknya berumur di atas 35 hari karena pada umur di bawahnya ...",["anak kelinci belum memiliki bulu", "kelinci sudah siap dikawinkan", "anak kelinci masih membutuhkan susu induk dan rentan mati", "anak kelinci tidak lagi membutuhkan pakan"]],
+["entry.848067572","Hamster termasuk hewan nokturnal, artinya hamster aktif pada ...",["siang hari dan beristirahat pada malam hari", "malam hari dan beristirahat pada siang hari", "pagi hari saja", "sepanjang hari tanpa beristirahat"]],
+["entry.534735094","Hamster termasuk hewan pengerat dari ordo ...",["Carnivora", "Aves", "Reptilia", "Rodentia"]],
+["entry.366100611","Berdasarkan jenis dan manfaatnya, merpati digolongkan menjadi merpati hias, pos, balap, dan ...",["pedaging", "perah", "kerja", "penghasil wol"]],
+["entry.242750514","Orang Jawa menyebut burung kicauan yang dipelihara untuk dipandang dan dijadikan hiasan dengan istilah ...",["kenari", "kacer", "klangenan", "poksai"]],
+["entry.2088739221","Pakan alami untuk ternak kesayangan berasal dari ...",["campuran bahan baku yang dibuat di pabrik", "lingkungan sekitar, misalnya sayuran, buah-buahan, biji-bijian, dan serangga", "bahan yang tidak mengandung gizi", "bahan yang berbentuk pelet"]]
+];
+
+const Q = QBANK.map(r=>({e:r[0], q:r[1], o:r[2]}));
+const TOTAL = Q.length;
+let cur = 0;
+let answers = {};
+let ragu = {};
+let student = {nama:"",kelas:"",noujian:""};
+let timeLeft = CONFIG.DURATION_MIN*60;
+let timerId = null;
+let submitted = false;
+
+const $ = id => document.getElementById(id);
+const SS_KEY = "cbtSBK8_";
+
+try{ const s=JSON.parse(sessionStorage.getItem(SS_KEY)); if(s){ answers=s.answers||{}; ragu=s.ragu||{}; student=s.student||student; cur=s.cur||0; if(typeof s.timeLeft==="number") timeLeft=s.timeLeft; } }catch(e){}
+function persist(){ try{ sessionStorage.setItem(SS_KEY, JSON.stringify({answers,ragu,student,cur,timeLeft})); }catch(e){} }
+
+$("durchip").textContent = CONFIG.DURATION_MIN;
+
+function clearErr(){ ["err-nama","err-kelas","err-noujian"].forEach(i=>$(i).classList.remove("show")); }
+$("btn-start").addEventListener("click", ()=>{
+  clearErr();
+  const nama=$("nama").value.trim(), kelas=$("kelas").value, noujian=$("noujian").value.trim();
+  let ok=true;
+  if(!nama){$("err-nama").classList.add("show");ok=false;}
+  if(!kelas){$("err-kelas").classList.add("show");ok=false;}
+  if(!noujian){$("err-noujian").classList.add("show");ok=false;}
+  if(!ok) return;
+  student={nama,kelas,noujian}; persist();
+  $("peserta-txt").textContent = nama+" · "+kelas;
+  $("av").textContent = (nama[0]||"A").toUpperCase();
+  $("screen-start").classList.add("hidden");
+  $("screen-exam").classList.remove("hidden");
+  buildGrid(); render(); startTimer(); window.scrollTo(0,0);
+});
+
+function fmt(s){const m=Math.floor(s/60),ss=s%60;return (m<10?"0":"")+m+":"+(ss<10?"0":"")+ss;}
+function startTimer(){
+  updTimer();
+  timerId=setInterval(()=>{ timeLeft--; if(timeLeft<=0){timeLeft=0;updTimer();clearInterval(timerId);autoSubmit();return;} if(timeLeft%5===0)persist(); updTimer(); },1000);
+}
+function updTimer(){
+  $("clock-t").textContent=fmt(timeLeft);
+  const c=$("clock"); c.classList.remove("warn","danger");
+  if(timeLeft<=60)c.classList.add("danger"); else if(timeLeft<=300)c.classList.add("warn");
+}
+
+function render(){
+  const it=Q[cur];
+  $("qno").textContent=cur+1;
+  $("qtext").textContent=(cur+1)+". "+it.q;
+  $("ragutag").classList.toggle("on", !!ragu[it.e]);
+  $("btn-ragu").textContent = ragu[it.e]?"★ Batal Ragu":"★ Ragu-ragu";
+  const opts=$("opts"); opts.innerHTML="";
+  it.o.forEach((text,i)=>{
+    const value=LETTERS[i]+". "+text;
+    const d=document.createElement("div");
+    d.className="opt"+(answers[it.e]===value?" sel":"");
+    d.innerHTML='<div class="mk">'+LETTERS[i]+'</div><div class="tx">'+text.replace(/&/g,"&amp;").replace(/</g,"&lt;")+'</div>';
+    d.addEventListener("click",()=>{
+      answers[it.e]=value; persist();
+      [...opts.children].forEach(c=>c.classList.remove("sel")); d.classList.add("sel");
+      upd();
+      if(cur<TOTAL-1) setTimeout(()=>{cur++;render();window.scrollTo(0,0);},170);
+    });
+    opts.appendChild(d);
+  });
+  $("btn-prev").style.visibility=cur===0?"hidden":"visible";
+  $("btn-next").style.visibility=cur===TOTAL-1?"hidden":"visible";
+  upd();
+}
+function upd(){
+  const n=Object.keys(answers).length;
+  $("pbar").style.width=(n/TOTAL*100)+"%";
+  $("panel-cnt").textContent=n+" / "+TOTAL+" terjawab";
+  const g=$("grid");
+  if(g.children.length) [...g.children].forEach((b,i)=>{
+    const e=Q[i].e;
+    b.className=""; if(ragu[e])b.classList.add("ragu"); else if(answers[e])b.classList.add("done");
+    if(i===cur)b.classList.add("cur");
+  });
+}
+
+$("btn-prev").addEventListener("click",()=>{if(cur>0){cur--;render();window.scrollTo(0,0);}});
+$("btn-next").addEventListener("click",()=>{if(cur<TOTAL-1){cur++;render();window.scrollTo(0,0);}});
+$("btn-ragu").addEventListener("click",()=>{ const e=Q[cur].e; if(ragu[e])delete ragu[e]; else ragu[e]=1; persist(); render(); });
+$("panel-toggle").addEventListener("click",()=>{ $("panel-body").classList.toggle("hidden"); });
+function buildGrid(){
+  const g=$("grid"); g.innerHTML="";
+  for(let i=0;i<TOTAL;i++){ const b=document.createElement("button"); b.textContent=i+1;
+    b.addEventListener("click",()=>{cur=i;render();window.scrollTo(0,0);}); g.appendChild(b); }
+}
+
+function firstUnanswered(){for(let i=0;i<TOTAL;i++){if(!answers[Q[i].e])return i;}return -1;}
+$("btn-finish").addEventListener("click",()=>{
+  const done=Object.keys(answers).length, r=Object.keys(ragu).length, belum=TOTAL-done;
+  $("t-done").textContent=done; $("t-ragu").textContent=r; $("t-belum").textContent=belum;
+  if(belum>0){
+    $("cf-title").textContent="Belum Bisa Diakhiri";
+    $("cf-msg").innerHTML="Masih ada <b>"+belum+" soal</b> yang belum dijawab. Semua soal wajib dijawab sebelum mengakhiri ujian.";
+    $("cf-ok").textContent="Ke Soal Kosong"; $("cf-ok").className="btn btn-primary"; $("cf-ok").dataset.mode="goto";
+  }else{
+    $("cf-title").textContent="Akhiri Ujian?";
+    $("cf-msg").textContent="Semua soal sudah terjawab. Jawaban tidak dapat diubah setelah dikirim.";
+    $("cf-ok").textContent="Ya, Akhiri"; $("cf-ok").className="btn btn-danger"; $("cf-ok").dataset.mode="submit";
+  }
+  $("ov-confirm").classList.remove("hidden");
+});
+$("cf-cancel").addEventListener("click",()=>$("ov-confirm").classList.add("hidden"));
+$("cf-ok").addEventListener("click",()=>{
+  $("ov-confirm").classList.add("hidden");
+  if($("cf-ok").dataset.mode==="goto"){ cur=firstUnanswered(); render(); window.scrollTo(0,0); }
+  else doSubmit(false);
+});
+function autoSubmit(){
+  Q.forEach(it=>{ if(!answers[it.e]) answers[it.e]="A. "+it.o[0]; });
+  alert("Waktu habis! Jawaban dikirim otomatis.");
+  doSubmit(true);
+}
+
+function doSubmit(){
+  if(submitted) return; submitted=true;
+  if(timerId) clearInterval(timerId);
+  $("ov-sending").classList.remove("hidden");
+  const f=document.createElement("form");
+  f.action=CONFIG.action; f.method="POST"; f.target="gform_target";
+  const add=(n,v)=>{const i=document.createElement("input");i.type="hidden";i.name=n;i.value=v;f.appendChild(i);};
+  add(CONFIG.E_NAMA,student.nama); add(CONFIG.E_KELAS,student.kelas); add(CONFIG.E_NOUJIAN,student.noujian);
+  Q.forEach(it=>{ const v=answers[it.e]; if(v) add(it.e,v); });
+  add("fvv","1"); add("pageHistory","0,1"); add("fbzx",String(Math.floor(Math.random()*9e18)+1e18));
+  let ifr=$("gform_target");
+  if(!ifr){ifr=document.createElement("iframe");ifr.name="gform_target";ifr.id="gform_target";ifr.style.display="none";document.body.appendChild(ifr);}
+  ifr.addEventListener("load",onDone,{once:true});
+  document.body.appendChild(f); f.submit();
+  setTimeout(onDone,5000);
+}
+let doneShown=false;
+function onDone(){
+  if(doneShown) return; doneShown=true;
+  try{ sessionStorage.removeItem(SS_KEY); }catch(e){}
+  $("ov-sending").classList.add("hidden");
+  $("done-nama").textContent=student.nama;
+  $("done-ans").textContent=Object.keys(answers).length;
+  $("ov-done").classList.remove("hidden");
+}
+
+window.addEventListener("beforeunload",(e)=>{ if(!submitted && !$("screen-exam").classList.contains("hidden")){ e.preventDefault(); e.returnValue=""; } });
+</script>
+</body>
+</html>
